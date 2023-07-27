@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <a type="button" class="btn btn-success float-end" href="#">
+                            <a type="button" class="btn btn-success float-end" href="{{ route('admin.category.create') }}">
                                 <i class="fa fa-plus"></i>
                             </a>
                         </div>
@@ -35,6 +35,8 @@
                                     <th>{{ __('titles.id') }}</th>
                                     <th>{{ __('titles.name') }}</th>
                                     <th>{{ __('titles.status') }}</th>
+                                    <th>{{ __('titles.edit_category') }}</th>
+                                    <th>{{ __('titles.delete_category') }}</th>
 
                                 </tr>
                             </thead>
@@ -43,7 +45,7 @@
                             <tbody>
                                 @foreach ($categories as $category)
                                     <tr>
-                                        <td>{{ $category->id }}</td>
+                                        <td>{{ $loop->index+1 }}</td>
                                         <td>{{ $category->name }}</td>
                                         <td>
                                             @if ($category->status == 1)
@@ -51,6 +53,9 @@
                                             @else
                                                 <span class="badge bg-danger">{{ __('messages.inactive') }}</span>
                                             @endif
+                                        </td>
+                                        <td><a href="{{ route('admin.category.edit', ['id' => $category->id]) }}" class="btn btn-sm btn-info">Edit</a></td>
+                                        <td><a href="{{ route('admin.category.destroy', ['id' => $category->id]) }}" class="btn btn-sm btn-danger">Delete</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>

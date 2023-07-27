@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <a type="button" class="btn btn-success float-end" href="#">
+                            <a type="button" class="btn btn-success float-end" href="{{ route('admin.product.create') }}">
                                 <i class="fa fa-plus"></i>
                             </a>
                         </div>
@@ -36,6 +36,7 @@
                                     <th>{{ __('titles.title') }}</th>
                                     <th>{{ __('titles.category_name') }}</th>
                                     <th>{{ __('titles.price') }}</th>
+                                    <th>{{ __('titles.description') }}</th>
                                 </tr>
                             </thead>
                             @foreach ($products as $product)
@@ -44,11 +45,12 @@
                                     <td>{{ $product->title }}</td>
                                     <td>{{ $product->category->name }}</td>
                                     <td>{{ $product->price }}</td>
+                                    <td>{{ $product->description }}</td>
                                 </tr>
                             @endforeach
-    
+
                             <tbody>
-    
+
                             </tbody>
                         </table>
                     </div>
