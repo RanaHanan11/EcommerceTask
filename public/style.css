@@ -1,0 +1,15 @@
+/* Styles for hiding the default file input */
+.custom-file-upload input[type="file"] {
+    display: none;
+  }
+
+  /* Style for the custom button */
+  .custom-file-upload span {
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 4px;
+    color: #fff;
+  }
+  .custom-file-upload span:hover {
+    background-color: #0056b3;
+  }

@@ -20,14 +20,14 @@
 
 
     <div class="col-xl-12 d-flex align-items-center justify-content-center">
-        <div class="card" style="width: 50%">
+        <div class="card" style="width: 75%">
             <div class="card-body">
                 <form method="post" action="{{ route('admin.category.store') }}">
                     @csrf
                     <div class="mb-3">
                         <label for="formrow-firstname-input" class="form-label">Category Name</label>
-                        <input type="text" class="form-control" id="formrow-firstname-input"
-                            placeholder="Enter Category Name" name="name">
+                        <input type="text" class="form-control" id="formrow-firstname-input" placeholder="Enter Category Name" name="name">
+                        @error('name') <p style="color: red">{{ $message }}</p> @enderror
                     </div>
                     <div class="mb-3">
                         <label for="formrow-inputState" class="form-label">Category Status</label>

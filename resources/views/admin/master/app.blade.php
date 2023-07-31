@@ -14,6 +14,8 @@
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="{{ asset('assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @yield('css')
 </head>
 

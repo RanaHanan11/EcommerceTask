@@ -41,8 +41,15 @@
                     <!-- item-->
                     <a class="dropdown-item text-danger" href="#"><i
                             class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span
-                            key="t-logout">Logout</span></a>
+                            key="t-logout"
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">Logout</span></a>
+                            
+                    <form id="logout-form" action="{{ route('logout') }}" method="post" class="d-none">
+                        @csrf
+                    </form>
                 </div>
+
             </div>
 
         </div>

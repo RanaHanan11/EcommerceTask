@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -17,9 +18,11 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('admins')->insert([
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('12345'),
+        DB::table('users')->insert([
+            'name' => 'admin',
+            'email' => 'amir@admin.com',
+            'password' => Hash::make('123456789'),
+            'created_at'=> Carbon::now(),
         ]);
     }
 }

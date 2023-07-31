@@ -16,7 +16,8 @@
         </div>
     </div>
     <!-- end page title -->
-
+    @component('components.errors')     
+    @endcomponent
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -37,6 +38,8 @@
                                     <th>{{ __('titles.category_name') }}</th>
                                     <th>{{ __('titles.price') }}</th>
                                     <th>{{ __('titles.description') }}</th>
+                                    <th>{{ __('titles.edit_product') }}</th>
+                                    <th>{{ __('titles.delete_product') }}</th>
                                 </tr>
                             </thead>
                             @foreach ($products as $product)
@@ -46,6 +49,8 @@
                                     <td>{{ $product->category->name }}</td>
                                     <td>{{ $product->price }}</td>
                                     <td>{{ $product->description }}</td>
+                                    <td><a href="{{ route('admin.product.edit', ['id' => $product->id]) }}" class="btn btn-sm btn-info">Edit</a></td>
+                                    <td><a href="{{ route('admin.product.destroy', ['id' => $product->id]) }}" class="btn btn-sm btn-danger">Delete</a></td>
                                 </tr>
                             @endforeach
 

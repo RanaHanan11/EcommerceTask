@@ -26,16 +26,17 @@
                     @csrf
                     @method('put');
                     <div class="mb-3">
-                        <label for="formrow-firstname-input" class="form-label">Category Name</label>
-                        <input type="text" class="form-control" id="formrow-firstname-input"
-                            placeholder="Enter Category Name" name="name" value="{{ $category->name }}">
+                        <label class="form-label">Category Name</label>
+                        <input type="text" class="form-control" placeholder="Enter Category Name" name="name" value="{{ $category->name }}">
+                        @error('name') <p style="color: red">{{ $message }}</p> @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="formrow-inputState" class="form-label">Category Status</label>
-                        <select id="formrow-inputState" class="form-select" name="status">
-                            <option selected value="1">Active</option>
-                            <option value="0">Deactive</option>
+                        <label class="form-label">Category Status</label>
+                        <select class="form-select" name="status">
+                            <option value="1" @if($category->status == 1) selected @endif>Active</option>
+                            <option value="0" @if($category->status == 0) selected @endif>Deactive</option>
                         </select>
+
                     </div>
                     <button type="submit" name="submit" class="btn btn-primary w-md">Submit</button>
                 </form>

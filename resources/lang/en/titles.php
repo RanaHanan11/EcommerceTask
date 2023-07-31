@@ -17,9 +17,12 @@ return [
     'category_id' => 'Category ID',
     'category_name' => 'Category Name',
     'edit_category' => 'Edit',
+    'delete_product' => 'Delete',
+    'edit_product' => 'Edit',
     'delete_category' => 'Delete',
     'create_new_category'=>'Create New Category',
     'create'=> 'Create',
     'create_new_product'=>'Create New Product',
-    
+    'please_select_category'=>'Select Category',
+
 ];
