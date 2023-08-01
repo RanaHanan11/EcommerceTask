@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Providers;
-use App\Repository\AdminRepository;
-use App\Repository\Interfaces\AdminRepositoryInterfaces;
+use App\Repository\CategoryRepository;
+use App\Repository\Interfaces\CategoryRepositoryInterfaces;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -12,7 +12,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(AdminRepositoryInterfaces::class, AdminRepository::class);
+        $this->app->bind(CategoryRepositoryInterfaces::class, CategoryRepository::class);
     }
 
     /**

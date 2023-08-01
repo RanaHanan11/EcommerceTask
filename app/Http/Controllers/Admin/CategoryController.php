@@ -6,13 +6,15 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\categoryRequest;
+use App\Repository\Interfaces\CategoryRepositoryInterfaces;
+use App\Repository\CategoryRepository;
 
 class CategoryController extends Controller
 {
     //
-    public function index()
+    public function index(CategoryRepositoryInterfaces $categoryRepository)
     {
-        $categories = Category::all();
+        $categories = $categoryRepository->all();
         return view('admin.category.index', compact('categories'));
     }
 
@@ -20,29 +22,27 @@ class CategoryController extends Controller
     {
         return view('admin.category.create');
     }
-    //cateoryrequest
-    public function store(categoryRequest $request)
-    {
-        Category::create($request->all());
-        return redirect()->route('admin.category.index');
-    }
 
-    public function edit($id)
+    public function store(categoryRequest $request, CategoryRepositoryInterfaces $categoryRepository)
+   {
+        $categoryRepository->store($request);
+        return redirect()->route('admin.category.index');
+   }
+
+    public function edit($id, CategoryRepositoryInterfaces $categoryRepository)
     {
-        $category = Category::find($id);
+        $category = $categoryRepository->edit($id);
         return view('admin.category.edit', compact('category'));
     }
 
-    public function update(categoryRequest $request, $id)
+    public function update(categoryRequest $request, $id, CategoryRepositoryInterfaces $categoryRepository)
     {
-        $category = Category::find($id);
-        $category->update($request->all());
+        $categoryRepository->update($request, $id);
         return redirect()->route('admin.category.index');
     }
-    public function destroy($id)
+    public function destroy($id, CategoryRepositoryInterfaces $categoryRepository)
     {
-        $category = Category::find($id);
-        $category->delete();
+        $categoryRepository->destroy($id);
         return redirect()->route('admin.category.index');
     }
 }
