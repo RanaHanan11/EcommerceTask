@@ -6,23 +6,29 @@ use App\Models\Category;
 class CategoryRepository implements CategoryRepositoryInterfaces{
 
     public function all(){
-        return Category::all();
+        $categories =  Category::all();
+        return view('admin.category.index', compact('categories'));
+    }
+    public function create(){
+        return view('admin.category.create');
     }
     public function store($request){
-        return Category::create($request->all());
+        Category::create($request->all());
+        return redirect()->route('admin.category.index');
     }
     public function edit($id){
-        return Category::find($id);
+        $category = Category::find($id);
+        return view('admin.category.edit', compact('category'));
     }
     public function update($request, $id){
         $category = Category::find($id);
         $category->update($request->all());
-        return $category;
+        return redirect()->route('admin.category.index');
     }
     public function destroy($id){
         $category = Category::find($id);
         $category->delete();
-        return $category;
+        return redirect()->route('admin.category.index');
     }
 
 }

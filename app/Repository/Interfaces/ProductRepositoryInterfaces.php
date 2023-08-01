@@ -1,7 +1,7 @@
 <?php
 namespace App\Repository\Interfaces;
 
-interface CategoryRepositoryInterfaces{
+interface ProductRepositoryInterfaces{
 
     public function all();
     public function create();
@@ -9,4 +9,5 @@ interface CategoryRepositoryInterfaces{
     public function edit($id);
     public function update($request, $id);
     public function destroy($id);
+
 }

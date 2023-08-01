@@ -7,42 +7,39 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\categoryRequest;
 use App\Repository\Interfaces\CategoryRepositoryInterfaces;
-use App\Repository\CategoryRepository;
 
 class CategoryController extends Controller
 {
-    //
+
     public function index(CategoryRepositoryInterfaces $categoryRepository)
     {
-        $categories = $categoryRepository->all();
-        return view('admin.category.index', compact('categories'));
+        return $categoryRepository->all();
     }
 
-    public function create()
+    public function create(CategoryRepositoryInterfaces $categoryRepository)
     {
-        return view('admin.category.create');
+        return $categoryRepository->create();
     }
 
     public function store(categoryRequest $request, CategoryRepositoryInterfaces $categoryRepository)
    {
-        $categoryRepository->store($request);
-        return redirect()->route('admin.category.index');
+
+        return $categoryRepository->store($request);
    }
 
     public function edit($id, CategoryRepositoryInterfaces $categoryRepository)
     {
-        $category = $categoryRepository->edit($id);
-        return view('admin.category.edit', compact('category'));
+        return $categoryRepository->edit($id);
     }
 
     public function update(categoryRequest $request, $id, CategoryRepositoryInterfaces $categoryRepository)
     {
-        $categoryRepository->update($request, $id);
-        return redirect()->route('admin.category.index');
+       return $categoryRepository->update($request, $id);
+
     }
     public function destroy($id, CategoryRepositoryInterfaces $categoryRepository)
     {
-        $categoryRepository->destroy($id);
-        return redirect()->route('admin.category.index');
+       return $categoryRepository->destroy($id);
+
     }
 }
