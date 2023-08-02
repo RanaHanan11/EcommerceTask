@@ -74,7 +74,7 @@
                         <h4 class="card-title mb-4">Upload Feacture Image</h4>
                         <div class="row mb-4">
                             <div class="custom-file-upload ">
-                                <label for="file-upload" class="btn btn-primary w-xl">
+                                <label for="file-upload" class="btn btn-primary w-xl" id="upload-label">
                                     Click to Add Image
                                 </label>
                                 <input id="file-upload" type="file" name="feature_image" accept="image/*">
@@ -92,7 +92,7 @@
 
                         <div class="row mb-4">
                             <div class="custom-file-upload ">
-                                <label for="file-uploads" class="btn btn-primary w-xl">
+                                <label for="file-uploads" class="btn btn-primary w-xl" id="upload-labels">
                                     Click to Add Multiple Images
                                 </label>
                                 <input id="file-uploads" type="file" name="multiple_image[]" multiple>
@@ -131,6 +131,17 @@
     </form>
 @endsection
 @section('script')
+<script>
+    document.getElementById('file-upload').addEventListener('change', function(e) {
+        var filesCount = e.target.files.length;
+        document.getElementById('upload-label').innerText = filesCount + " file(s) selected";
+    });
+
+    document.getElementById('file-uploads').addEventListener('change', function(e) {
+        var filesCount = e.target.files.length;
+        document.getElementById('upload-labels').innerText = filesCount + " file(s) selected";
+    });
+</script>
     <script>
         $(document).ready(function() {
             let variantCounter = 1;
@@ -290,7 +301,7 @@
 
             // set the data into the hidden input
             $('#variant_combinations').val(JSON.stringify(data));
-            
+
             // disable the input fields before the form submission
             $('.variant-input').attr('disabled', 'disabled');
 

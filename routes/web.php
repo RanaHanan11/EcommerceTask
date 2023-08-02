@@ -58,7 +58,7 @@ Auth::routes(['register' => false]);
 
 
 Route::group(['middleware' => ['auth']], function () {
-    
+
     Route::prefix('admin')->group(function () {
 
         Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
@@ -76,5 +76,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('admin.product.edit');
         Route::put('/product/update/{id}', [ProductController::class, 'update'])->name('admin.product.update');
         Route::get('/product/delete/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
+
+        Route::get('/product/category/{id}', [CategoryController::class, 'getCategory'])->name('admin.product.category');
     });
 });

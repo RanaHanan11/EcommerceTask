@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Repository\Interfaces\ProductRepositoryInterfaces;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Gallery;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -138,8 +139,11 @@ class ProductRepository implements ProductRepositoryInterfaces
     {
         $product = Product::find($id);
         $categories = Category::all();
+        $image =Gallery::where('product_id', $id)->get();
+        $selected_featureImage = $product->feature_image = json_decode($product->feature_image);
+        $selected_multipleImage=  $product->multiple_image = json_decode($product->multiple_image);
         $selectedCategoryId = $product->category_id;
-        return view('admin.product.edit', compact('product', 'categories', 'selectedCategoryId'));
+        return view('admin.product.edit', compact('product', 'categories','image',  'selectedCategoryId', 'selected_featureImage', 'selected_multipleImage'));
     }
 
     public function update($request, $id)

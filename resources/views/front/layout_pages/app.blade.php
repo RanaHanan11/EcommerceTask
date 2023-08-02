@@ -52,16 +52,16 @@
                                     <a href="javascript:void(0);">Shop</a>
                                     <div class="megaMenu">
                                         <div class="row">
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-12">
                                                 <h3>Cateogies</h3>
                                                 <ul>
                                                     @foreach ($categories as $item)
-                                                        <li><a href="#">{{ $item->name }}</a></li>
+                                                        <li><a href="{{ route('admin.product.category', $item) }}">{{ $item->name }}</a></li>
                                                     @endforeach
                                                 </ul>
                                             </div>
 
-                                            <div class="col-lg-4 hideOnMobile">
+                                            {{-- <div class="col-lg-4 hideOnMobile">
                                                 <div class="lookBook01 lb01M2">
                                                     <div class="lbContent">
                                                         <h3>Be Stylish</h3>
@@ -72,7 +72,7 @@
                                                     <img src="{{ asset('front/asset2/images/home1/3.png') }}"
                                                         alt="Mans Latest Collection">
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </li>
@@ -398,17 +398,14 @@
                                     @foreach($products as $product)
                                     <div class="col-sm-6 col-lg-4 col-xl-3">
                                         <div class="productItem01">
-                                            <div class="pi01Thumb">
+                                            <div class="pi01Thumb" style="width: 300px; height: 300px; overflow: hidden;">
                                                 <img src="{{ asset('uploads/feature_product/'.$product->feature_image) }}"
-                                                    alt="Ulina Product" />
-                                                {{-- <img src="{{ asset('front/asset2/images/products/5.1.jpg') }}"
-                                                    alt="Ulina Product" /> --}}
+                                                    alt="Ulina Product" style="object-fit: cover; width: 100%; height: 100%;"/>
                                                 <div class="pi01Actions">
-                                                    <a href="javascript:void(0);" class="pi01Cart"><i
-                                                            class="fa-solid fa-shopping-cart"></i></a>
+                                                    <a href="javascript:void(0);" class="pi01Cart"><i class="fa-solid fa-shopping-cart"></i></a>
                                                 </div>
                                                 <div class="productLabels clearfix">
-                                                    <span class="plDis">- ${{$product->price}}</span>
+                                                    <span class="plDis">${{$product->price}}</span>
                                                 </div>
                                             </div>
                                             <div class="pi01Details">
@@ -421,11 +418,12 @@
                                                 <div class="pi01Price">
                                                     <ins>${{$product->price}}</ins>
                                                 </div>
-                              
+
                                             </div>
                                         </div>
                                     </div>
                                     @endforeach
+
 
 
 

@@ -17,9 +17,7 @@ class PagesController extends Controller
         $products = DB::table('products')
             ->leftjoin('galleries', 'products.id','galleries.product_id')
             ->select('products.*', 'galleries.*')
-            ->get(); 
-        return  view('front.layout_pages.app', [
-            'categories' => $categories, 'products' => $products
-        ]);
+            ->get();
+        return  view('front.layout_pages.app', compact('categories', 'products'));
     }
 }
