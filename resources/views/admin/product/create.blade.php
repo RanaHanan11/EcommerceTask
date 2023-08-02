@@ -20,6 +20,8 @@
     <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row">
+            <input type="hidden" name="variant_combinations" id="variant_combinations">
+
             <div class="col-xl-8">
                 <div class="card">
                     <div class="card-body">
@@ -48,17 +50,19 @@
                                 <p style="color: red">{{ $message }}</p>
                             @enderror
                         </div>
-                        {{-- <div class="mb-3">
+                        <div class="mb-3">
                             <div id="variantsContainer">
 
                             </div>
-                            <input type="button" style="margin-top: 20px;" class="btn btn-success w-lg" value="Add Variant" id="addVariantBtn">
-                            <input type="button" style="margin-top: 20px;" class="btn btn-primary w-lg" value="Save Record" id="saveRecord">
+                            <input type="button" style="margin-top: 20px;" class="btn btn-success w-lg" value="Add Variant"
+                                id="addVariantBtn">
+                            <input type="button" style="margin-top: 20px;" class="btn btn-primary w-lg" value="Save Record"
+                                id="saveRecord">
 
                             <div id="saveRecordContainer">
 
                             </div>
-                        </div> --}}
+                        </div>
 
                     </div>
                 </div>
@@ -72,11 +76,11 @@
                             <div class="custom-file-upload ">
                                 <label for="file-upload" class="btn btn-primary w-xl">
                                     Click to Add Image
-                                  </label>
-                                  <input id="file-upload" type="file" name="feature_image" accept="image/*">
-                                  @error('feature_image')
-                                  <p style="color: red">{{ $message }}</p>
-                              @enderror
+                                </label>
+                                <input id="file-upload" type="file" name="feature_image" accept="image/*">
+                                @error('feature_image')
+                                    <p style="color: red">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -90,11 +94,11 @@
                             <div class="custom-file-upload ">
                                 <label for="file-uploads" class="btn btn-primary w-xl">
                                     Click to Add Multiple Images
-                                  </label>
-                                  <input id="file-uploads" type="file" name="multiple_image[]" multiple>
-                                  @error('multiple_image')
-                                  <p style="color: red">{{ $message }}</p>
-                              @enderror
+                                </label>
+                                <input id="file-uploads" type="file" name="multiple_image[]" multiple>
+                                @error('multiple_image')
+                                    <p style="color: red">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -121,141 +125,181 @@
             </div>
         </div>
         <div class="row">
-            <button type="submit" class="btn btn-primary btn-lg w-10">{{ __('Submit') }}</button>
+            <button type="submit" id="form_save_submit" class="btn btn-primary btn-lg w-10">{{ __('Submit') }}</button>
         </div>
 
     </form>
 @endsection
 @section('script')
-{{-- <script>
-$(document).ready(function() {
-      let variantCounter = 1;
-      const maxAddOptionBtnClicks = 2;
+    <script>
+        $(document).ready(function() {
+            let variantCounter = 1;
+            const maxAddOptionBtnClicks = 2;
 
-      $('#addVariantBtn').on('click', function() {
-        if (variantCounter > maxAddOptionBtnClicks) {
-          alert('Cannot add any more variants!');
-          return;
-        }
+            $('#addVariantBtn').on('click', function() {
+                if (variantCounter > maxAddOptionBtnClicks) {
+                    alert('Cannot add any more variants!');
+                    return;
+                }
 
-        const variantsContainer = $('#variantsContainer');
-        const variantDiv = $('<div>').addClass('variant-div').attr('data-index', variantCounter);
-        const variantLabel = $('<label>').text('Variants').css('display', 'block').css('margin-top', '10px');
+                const variantsContainer = $('#variantsContainer');
+                const variantDiv = $('<div>').addClass('variant-div').attr('data-index', variantCounter);
+                const variantLabel = $('<label>').text('Variants').css('display', 'block').css('margin-top',
+                    '10px');
 
-        let inputFieldValue = variantCounter === 1 ? 'Size' : 'Color';
-        const optionNameLabel = $('<label>').text(inputFieldValue);
+                let inputFieldValue = variantCounter === 1 ? 'Size' : 'Color';
+                const optionNameLabel = $('<label>').text(inputFieldValue);
 
-        const sizeInput = $('<input>')
-          .attr('type', 'text')
-          .attr('name', inputFieldValue)
-          .addClass('form-control')
-          .addClass('variant-input');
+                const sizeInput = $('<input>')
+                    .attr('type', 'text')
+                    .attr('name', inputFieldValue)
+                    .addClass('form-control')
+                    .addClass('variant-input');
 
-        const optionContainer = $('<div>').addClass('option-container');
-        variantDiv.append(variantLabel, optionNameLabel, optionContainer);
-        optionContainer.append(sizeInput);
-        createAddOptionBtn(optionContainer, inputFieldValue);
-        variantsContainer.append(variantDiv);
+                const optionContainer = $('<div>').addClass('option-container');
+                variantDiv.append(variantLabel, optionNameLabel, optionContainer);
+                optionContainer.append(sizeInput);
+                createAddOptionBtn(optionContainer, inputFieldValue);
+                variantsContainer.append(variantDiv);
 
-        variantCounter++;
-      });
+                variantCounter++;
+            });
 
-      // Save Record button click event handler
-      $('#saveRecord').on('click', function() {
-        const combinations = generateCombinations();
+            // Save Record button click event handler
+            $('#saveRecord').on('click', function() {
+                const combinations = generateCombinations();
 
-        // Clear the container and create a div with class 'container'
-        $('#saveRecordContainer').empty();
-        const containerDiv = $('<div>').addClass('container');
-        $('#saveRecordContainer').append(containerDiv);
+                // Clear the container and create a div with class 'container'
+                $('#saveRecordContainer').empty();
+                const containerDiv = $('<div>').addClass('container');
+                $('#saveRecordContainer').append(containerDiv);
 
-        // Create the title row and add it to the container
-        let titleRow = $('<div>').addClass('row');
-        let title = $('<label>').text('Varients').css('font-weight', 'bold').css('margin-top', '30px').addClass('col-4');
-        let quantityTitle = $('<label>').text('Quantity').css('font-weight', 'bold').css('margin-top', '30px').addClass('col-7');
-        titleRow.append(title, quantityTitle);
-        containerDiv.append(titleRow);
+                // Create the title row and add it to the container
+                let titleRow = $('<div>').addClass('row');
+                let title = $('<label>').text('Varients').css('font-weight', 'bold').css('margin-top',
+                    '30px').addClass('col-4');
+                let quantityTitle = $('<label>').text('Quantity').css('font-weight', 'bold').css(
+                    'margin-top', '30px').addClass('col-7');
+                titleRow.append(title, quantityTitle);
+                containerDiv.append(titleRow);
 
-        // Display the combinations in the div with an input field for quantity.
-        for(let i = 0; i < combinations.length; i++) {
-          let row = $('<div>').addClass('row');
-          let combinationCell = $('<div>').addClass('col-4').text(combinations[i]).css('margin-top', '10px');
-          let quantityInputCell = $('<div>').addClass('col-7').append($('<input>').css('margin-top', '10px')
-            .attr('type', 'number')
-            .attr('name', 'quantity' + i)
-            .attr('placeholder', 'Enter quantity')
-            .addClass('form-control'));
+                // Display the combinations in the div with an input field for quantity.
+                for (let i = 0; i < combinations.length; i++) {
+                    let row = $('<div>').addClass('row');
+                    let combinationCell = $('<div>').addClass('col-4').text(combinations[i]).css(
+                        'margin-top', '10px');
+                    let quantityInputCell = $('<div>').addClass('col-7').append($('<input>').css(
+                            'margin-top', '10px')
+                        .attr('type', 'number')
+                        .attr('name', 'quantity' + i)
+                        .attr('placeholder', 'Enter quantity')
+                        .addClass('form-control'));
 
-          row.append(combinationCell, quantityInputCell);
-          containerDiv.append(row);
-        }
-      });
-    });
+                    row.append(combinationCell, quantityInputCell);
+                    containerDiv.append(row);
 
+                }
 
-
-    function createAddOptionBtn(container, inputFieldName) {
-      const addOptionBtn = $('<button>').text('Add Option Variant').addClass('add-option-btn').addClass('btn').addClass('btn-primary').addClass('w-lg').addClass('mt-4');
-
-      addOptionBtn.on('click', function(e) {
-        e.preventDefault();
-
-        const newInputField = $('<input>')
-          .attr('type', 'text')
-          .attr('name', inputFieldName)
-          .addClass('variant-input')
-          .addClass('form-control')
-          .css('margin-top', '10px');
-
-        addOptionBtn.before(newInputField);
-      });
-
-      container.append(addOptionBtn);
-    }
-
-    function generateCombinations() {
-      const variantsList = [];
-
-      $('.variant-div').each(function() {
-        const inputFieldName = $('input:first', this).attr('name');
-        const optionValues = [];
-
-        $(this).find('.variant-input').each(function() {
-          const inputValue = $(this).val();
-          if (inputValue.trim() !== '') {
-            optionValues.push(inputValue);
-          }
+            });
         });
 
-        if (optionValues.length > 0) {
-          variantsList.push({ [inputFieldName]: optionValues });
+
+
+
+        function createAddOptionBtn(container, inputFieldName) {
+            const addOptionBtn = $('<button>').text('Add Option Variant').addClass('add-option-btn').addClass('btn')
+                .addClass('btn-primary').addClass('w-lg').addClass('mt-4');
+
+            addOptionBtn.on('click', function(e) {
+                e.preventDefault();
+
+                const newInputField = $('<input>')
+                    .attr('type', 'text')
+                    .attr('name', inputFieldName)
+                    .addClass('variant-input')
+                    .addClass('form-control')
+                    .css('margin-top', '10px');
+
+                addOptionBtn.before(newInputField);
+            });
+
+            container.append(addOptionBtn);
         }
-      });
 
-      function generateVariantsRecursive(index, currentCombination) {
-        if (index === variantsList.length) {
-          combinations.push(currentCombination.join('/'));
-          return;
+        function generateCombinations() {
+            const variantsList = [];
+
+            $('.variant-div').each(function() {
+                const inputFieldName = $('input:first', this).attr('name');
+                const optionValues = [];
+
+                $(this).find('.variant-input').each(function() {
+                    const inputValue = $(this).val();
+                    if (inputValue.trim() !== '') {
+                        optionValues.push(inputValue);
+                    }
+                });
+
+                if (optionValues.length > 0) {
+                    variantsList.push({
+                        [inputFieldName]: optionValues
+                    });
+                }
+            });
+
+            function generateVariantsRecursive(index, currentCombination) {
+                if (index === variantsList.length) {
+                    combinations.push(currentCombination.join('/'));
+                    return;
+                }
+
+                const variant = variantsList[index];
+                const variantKey = Object.keys(variant)[0];
+                const variantValues = variant[variantKey];
+
+                if (variantValues.length === 0) {
+                    generateVariantsRecursive(index + 1, currentCombination);
+                } else {
+                    for (let i = 0; i < variantValues.length; i++) {
+                        generateVariantsRecursive(index + 1, [...currentCombination, variantValues[i]]);
+                    }
+                }
+            }
+
+            const combinations = [];
+            generateVariantsRecursive(0, []);
+
+            return combinations;
         }
 
-        const variant = variantsList[index];
-        const variantKey = Object.keys(variant)[0];
-        const variantValues = variant[variantKey];
 
-        if (variantValues.length === 0) {
-          generateVariantsRecursive(index + 1, currentCombination);
-        } else {
-          for (let i = 0; i < variantValues.length; i++) {
-            generateVariantsRecursive(index + 1, [...currentCombination, variantValues[i]]);
-          }
-        }
-      }
+        //on form_save_submit button click generted combinations with quantity send to controller
+        // This should replace the existing $('#form_save_submit').on('click', function() {...});
+        $('#form_save_submit').on('click', function(e) {
+            const combinations = generateCombinations();
+            const quantity = [];
 
-      const combinations = [];
-      generateVariantsRecursive(0, []);
+            for (let i = 0; i < combinations.length; i++) {
+                quantity.push($('input[name="quantity' + i + '"]').val());
+            }
 
-      return combinations;
-    }
+            const data = {
+                combinations,
+                quantity
+            };
 
-</script> --}}
+            // set the data into the hidden input
+            $('#variant_combinations').val(JSON.stringify(data));
+            
+            // disable the input fields before the form submission
+            $('.variant-input').attr('disabled', 'disabled');
+
+            // disable the quantity fields before the form submission
+            for (let i = 0; i < combinations.length; i++) {
+                $('input[name="quantity' + i + '"]').attr('disabled', 'disabled');
+            }
+
+            // no need to prevent the default action, form should be submitted after this
+        });
+    </script>
 @endsection

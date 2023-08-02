@@ -5,9 +5,11 @@ use App\Models\AdminDashboard;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\PagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,14 +51,17 @@ Route::get('migrate_fresh', function () {
     // return 'fresh migration and passport is done';
 })->name('migrate_fresh');
 
+Route::get('/', [PagesController::class, 'index'])->name('home');
 
 Auth::routes(['register' => false]);
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 Route::group(['middleware' => ['auth']], function () {
-
+    
     Route::prefix('admin')->group(function () {
+
+        Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
         //category route
         Route::get('/category', [CategoryController::class, 'index'])->name('admin.category.index');
         Route::get('/category/create', [CategoryController::class, 'create'])->name('admin.category.create');

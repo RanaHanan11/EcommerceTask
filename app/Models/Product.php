@@ -23,4 +23,9 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    //gallery relation
+    public function gallery()
+    {
+        return $this->hasMany(Gallery::class);
+    }
 }

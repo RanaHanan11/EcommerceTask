@@ -10,7 +10,10 @@ use App\Repository\Interfaces\CategoryRepositoryInterfaces;
 
 class CategoryController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(CategoryRepositoryInterfaces $categoryRepository)
     {
         return $categoryRepository->all();
